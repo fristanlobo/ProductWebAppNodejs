@@ -1,0 +1,9 @@
+Steps to create npm api'Steps
+
+1. exceute command "npm init " 
+ - Answer all the question and the package.json file will be created
+2. Install packages like 
+ - express
+ - moongose
+ - nodemon 
+3. 
