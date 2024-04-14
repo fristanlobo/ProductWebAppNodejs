@@ -16,7 +16,7 @@ const User = mongoose.Schema({
         type: String,
         min: 8,
         max: 15,
-        require: true
+        require: true,
     }
 }, {
     timestamp: true,
