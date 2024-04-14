@@ -6,7 +6,7 @@ const cors = require("cors")
 const morgan = require("morgan");
 const helmet = require("helmet");
 const authRouter = require("./router/auth");
-// const noteRouter = require("./router/notes");
+const productRouter = require("./router/product");
 
 dotenv.config();
 
@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGO_URL)
     });
 
 app.use("/api/auth", authRouter);
+app.use("/api/product", productRouter);
 app.listen(8001, () => {
     console.log("app is running on port ", 8001)
 });
