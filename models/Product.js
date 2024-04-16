@@ -12,15 +12,17 @@ const Product = mongoose.Schema({
         max: 10,
         require: true
     },
-    productCategory: {
+    ProductCategory: {
         type: String,
-        min: 5,
+        min: 1,
         max: 25,
+        require: true
     },
-    productCompany: {
+    ProductCompany: {
         type: String,
-        min: 5,
+        min: 1,
         max: 50,
+        require: true
     },
     userId: {
         type: String,
