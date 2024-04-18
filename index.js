@@ -1,10 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+
 const app = express();
 const cors = require("cors")
 const morgan = require("morgan");
 const helmet = require("helmet");
+
+
 const authRouter = require("./router/auth");
 const productRouter = require("./router/product");
 
@@ -29,3 +32,5 @@ app.use("/api/product", productRouter);
 app.listen(8001, () => {
     console.log("app is running on port ", 8001)
 });
+
+//JWT- json web token 

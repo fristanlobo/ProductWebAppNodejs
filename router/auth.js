@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const JWT = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 
 router.post("/register", async (req, res) => {
     try {
@@ -40,10 +45,21 @@ router.post("/login", async (req, res) => {
             // comparing given password with hashed password
             bcrypt.compare(req.body.password, user.password).then(function (result) {
                 result
-                    ? res.status(200).json({
-                        message: "Login successful",
-                        status: true,
-                        user,
+                    ?
+                    JWT.sign({ user }, process.env.JWT_KEY, { expiresIn: '2h' }, (err, token) => {
+                        console.log(err)
+                        if (err) {
+                            res.status(400).json({
+                                message: 'Error in generating the Token',
+                                status: false
+                            })
+                        }
+                        res.status(200).json({
+                            message: "Login successful",
+                            status: true,
+                            user,
+                            token: token
+                        })
                     })
                     : res.status(400).json({
                         message: "Login not succesful",
