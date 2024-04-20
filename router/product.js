@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Product = require("../models/Product");
 const verifyToken = require("../common/commonFunction");
 
-router.post("/addProduct",verifyToken, async (req, res) => {
+router.post("/addProduct", verifyToken, async (req, res) => {
     try {
         const product = new Product({
             ProductName: req.body.ProductName,
@@ -18,7 +18,7 @@ router.post("/addProduct",verifyToken, async (req, res) => {
     }
 })
 
-router.get("/getProduct",verifyToken, async (req, res) => {
+router.get("/getProduct", verifyToken, async (req, res) => {
     try {
         const products = await Product.find();
         if (products.length > 0) {
@@ -34,7 +34,7 @@ router.get("/getProduct",verifyToken, async (req, res) => {
     }
 })
 
-router.delete("/deleteProduct/:id",verifyToken, async (req, res) => {
+router.delete("/deleteProduct/:id", verifyToken, async (req, res) => {
     try {
         const productId = await Product.findOne({
             _id: req.params.id
@@ -61,7 +61,7 @@ router.delete("/deleteProduct/:id",verifyToken, async (req, res) => {
     }
 })
 
-router.get("/getProduct/:id",verifyToken, async (req, res) => {
+router.get("/getProduct/:id", verifyToken, async (req, res) => {
     try {
         const products = await Product.findOne({
             _id: req.params.id
@@ -79,7 +79,7 @@ router.get("/getProduct/:id",verifyToken, async (req, res) => {
     }
 })
 
-router.put("/updateProduct/:id",verifyToken, async (req, res) => {
+router.put("/updateProduct/:id", verifyToken, async (req, res) => {
     try {
         const findProduct = await Product.findOne({
             _id: req.params.id
@@ -111,22 +111,31 @@ router.put("/updateProduct/:id",verifyToken, async (req, res) => {
     }
 })
 
-/*router.get("/search/:key", async (req, res) => {
+router.get("/search/:key", async (req, res) => {
     try {
-        let result = await Product.find(
-            {
-                '$or': [
-                    { name: { $regex: req.params.key } }
-                ]
-            }
-        )
-        //res.send(result)
-        res.status(200).json(result)
+        if (req.params.key) {
+            let result = await Product.find(
+                {
+                    $or: [
+                        {
+                            ProductName: { $regex: req.params.key, $options: 'i' }
+                        }
+                    ]
+                }
+            )
+            res.status(200).json(result)
+        }
+        else {
+            res.status(400).json({
+                message: "No Paramter found",
+                status: false
+            })
+        }
     }
     catch (e) {
         res.status(500).json(e)
     }
-})*/
+})
 
 
 module.exports = router;
