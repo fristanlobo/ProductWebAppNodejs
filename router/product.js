@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const Product = require("../models/Product");
+const verifyToken = require("../common/commonFunction");
 
-router.post("/addProduct", async (req, res) => {
+router.post("/addProduct",verifyToken, async (req, res) => {
     try {
         const product = new Product({
             ProductName: req.body.ProductName,
@@ -17,7 +18,7 @@ router.post("/addProduct", async (req, res) => {
     }
 })
 
-router.get("/getProduct", async (req, res) => {
+router.get("/getProduct",verifyToken, async (req, res) => {
     try {
         const products = await Product.find();
         if (products.length > 0) {
@@ -33,7 +34,7 @@ router.get("/getProduct", async (req, res) => {
     }
 })
 
-router.delete("/deleteProduct/:id", async (req, res) => {
+router.delete("/deleteProduct/:id",verifyToken, async (req, res) => {
     try {
         const productId = await Product.findOne({
             _id: req.params.id
@@ -60,7 +61,7 @@ router.delete("/deleteProduct/:id", async (req, res) => {
     }
 })
 
-router.get("/getProduct/:id", async (req, res) => {
+router.get("/getProduct/:id",verifyToken, async (req, res) => {
     try {
         const products = await Product.findOne({
             _id: req.params.id
@@ -78,7 +79,7 @@ router.get("/getProduct/:id", async (req, res) => {
     }
 })
 
-router.put("/updateProduct/:id", async (req, res) => {
+router.put("/updateProduct/:id",verifyToken, async (req, res) => {
     try {
         const findProduct = await Product.findOne({
             _id: req.params.id

@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 
-router.post("/register", async (req, res) => {
+router.post("/register",async (req, res) => {
     try {
         const userCheck = await User.findOne({ email: req.body.email })
         if (!userCheck) {
@@ -47,7 +47,6 @@ router.post("/login", async (req, res) => {
                 result
                     ?
                     JWT.sign({ user }, process.env.JWT_KEY, { expiresIn: '2h' }, (err, token) => {
-                        console.log(err)
                         if (err) {
                             res.status(400).json({
                                 message: 'Error in generating the Token',
