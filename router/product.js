@@ -111,7 +111,7 @@ router.put("/updateProduct/:id", verifyToken, async (req, res) => {
     }
 })
 
-router.get("/search/:key", async (req, res) => {
+router.get("/search/:key", verifyToken, async (req, res) => {
     try {
         if (req.params.key) {
             let result = await Product.find(
