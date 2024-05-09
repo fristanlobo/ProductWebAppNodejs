@@ -4,10 +4,12 @@ const bcrypt = require("bcryptjs");
 const JWT = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
+
+
 dotenv.config();
 
 
-router.post("/register",async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
         const userCheck = await User.findOne({ email: req.body.email })
         if (!userCheck) {
@@ -72,6 +74,30 @@ router.post("/login", async (req, res) => {
             status: false
         })
     }
+})
+
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now();
+        cb(null, uniqueSuffix + file.originalname)
+    }
+})
+const upload = multer({ storage: storage })
+router.post('/profileUpload', upload.single('image'), async (req, res) => {
+    try {
+        console.log('=',req.body);
+        res.status(200).json("Uploaded");
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
 })
 
 module.exports = router;

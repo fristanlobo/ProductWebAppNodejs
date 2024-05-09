@@ -17,6 +17,12 @@ const User = mongoose.Schema({
         min: 8,
         max: 15,
         require: true,
+    },
+    image: {
+        type: String,
+        min: 4,
+        max: 512,
+        require: false
     }
 }, {
     timestamp: true,
